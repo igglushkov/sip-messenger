@@ -1,0 +1,16 @@
+{application, sip_messenger,
+ [{description, "An OTP application"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {sip_messenger_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    nksip
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.

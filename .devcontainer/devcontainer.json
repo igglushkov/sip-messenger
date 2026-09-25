@@ -1,0 +1,19 @@
+{
+  "image": "erlang:21.3",
+  "remoteUser": "root",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "pgourlain.erlang",
+        "sile.efmt"
+      ]
+    }
+  },
+  "runArgs": [
+    "--network=host"
+  ],
+  "containerEnv": {
+    "TZ": "Asia/Novosibirsk"
+  },
+  "postCreateCommand": "bash .devcontainer/setup.sh"
+}
