@@ -33,11 +33,11 @@ init([]) ->
                  intensity => 0,
                  period => 1
                 },
-    ChildSpecs = [nksip:get_sup_spec(sip_server,
+    ChildSpecs = [nksip:get_sup_spec(sip_messenger_server,
                                      #{
-                                      sip_local_host => "localhost",
-                                      plugins => [nksip_registrar],
-                                      sip_listen => "sip:all:5060"
+                                       sip_local_host => "localhost",
+                                       plugins => [nksip_registrar],
+                                       sip_listen => "sip:all:5060"
                                       })],
     {ok, {SupFlags, ChildSpecs}}.
 
