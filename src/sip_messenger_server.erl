@@ -1,6 +1,6 @@
 -module(sip_messenger_server).
 
--export([sip_authorize/3, sip_get_user_pass/4]).
+-export([sip_authorize/3, sip_register/2, sip_get_user_pass/4]).
 
 -include_lib("nkserver/include/nkserver_module.hrl").
 
@@ -32,6 +32,24 @@ sip_authorize(AuthList, Req, _Call) ->
                     {proxy_authenticate, <<"nksip">>}
             end
     end.
+
+
+sip_register(Req, _Call) ->
+    {ok, [{from_scheme, FromScheme}, {from_user, FromUser}, {from_domain, FromDomain}]} =
+        nksip_request:get_metas([from_scheme, from_user, from_domain], Req),
+
+    {ok, [{to_scheme, ToScheme}, {to_user, ToUser}, {to_domain, ToDomain}]} =
+        nksip_request:get_metas([to_scheme, to_user, to_domain], Req),
+
+    io:format("sip_server: sip_register(From ~p)~n", [FromUser]),
+    case {FromScheme, FromUser, FromDomain} of
+        {ToScheme, ToUser, ToDomain} ->
+            io:format("REGISTER OK: ~p~n", [{ToUser, ToDomain}]),
+            {reply, nksip_registrar:request(Req)};
+        _ ->
+            {reply, forbidden}
+    end.
+
 
 %% Private functions
 get_users_from_json() ->
